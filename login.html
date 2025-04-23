@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - LearnFree</title>
+    <style>
+        /* Modern Color Palette */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --success: #4cc9f0;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        /* Login Section */
+        .login-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 60px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        }
+
+        .login-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Illustration Side */
+        .login-illustration {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .login-illustration img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        .login-illustration h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .login-illustration p {
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        /* Form Side */
+        .login-form-container {
+            padding: 60px 50px;
+        }
+
+        .login-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .login-header h1 {
+            font-size: 32px;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .login-header p {
+            color: var(--gray);
+        }
+
+        /* Form Styles */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .form-group input {
+            padding: 14px 16px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input {
+            margin: 0;
+        }
+
+        .remember-me label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .forgot-password {
+            font-size: 14px;
+        }
+
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Button */
+        .login-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--light-gray);
+        }
+
+        /* Social Login */
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+            background-color: white;
+        }
+
+        .social-btn:hover {
+            background-color: var(--light-gray);
+        }
+
+        .social-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Signup Link */
+        .signup-link {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .login-illustration {
+                display: none;
+            }
+            
+            .login-form-container {
+                padding: 40px 30px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-form-container {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">
+                Learn<span>Free</span>
+            </a>
+        </div>
+    </header>
+
+    <section class="login-section">
+        <div class="container">
+            <div class="login-container">
+                <!-- Illustration Side -->
+                <div class="login-illustration">
+                    <svg width="300" height="300" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M250 400C339.286 400 412.5 326.786 412.5 237.5C412.5 148.214 339.286 75 250 75C160.714 75 87.5 148.214 87.5 237.5C87.5 326.786 160.714 400 250 400Z" fill="white" fill-opacity="0.2"/>
+                        <path d="M250 350C308.66 350 356.25 302.41 356.25 243.75C356.25 185.09 308.66 137.5 250 137.5C191.34 137.5 143.75 185.09 143.75 243.75C143.75 302.41 191.34 350 250 350Z" fill="white" fill-opacity="0.2"/>
+                        <path d="M250 300C278.035 300 300 278.035 300 250C300 221.965 278.035 200 250 200C221.965 200 200 221.965 200 250C200 278.035 221.965 300 250 300Z" fill="white"/>
+                        <path d="M250 237.5C256.875 237.5 262.5 231.875 262.5 225C262.5 218.125 256.875 212.5 250 212.5C243.125 212.5 237.5 218.125 237.5 225C237.5 231.875 243.125 237.5 250 237.5Z" fill="#4361EE"/>
+                        <path d="M250 350C308.66 350 356.25 302.41 356.25 243.75C356.25 185.09 308.66 137.5 250 137.5C191.34 137.5 143.75 185.09 143.75 243.75C143.75 302.41 191.34 350 250 350Z" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 15"/>
+                        <path d="M250 400C339.286 400 412.5 326.786 412.5 237.5C412.5 148.214 339.286 75 250 75C160.714 75 87.5 148.214 87.5 237.5C87.5 326.786 160.714 400 250 400Z" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 20"/>
+                    </svg>
+                    <h2>Welcome Back!</h2>
+                    <p>Continue your learning journey with access to all your saved resources.</p>
+                </div>
+
+                <!-- Form Side -->
+                <div class="login-form-container">
+                    <div class="login-header">
+                        <h1>Login to Your Account</h1>
+                        <p>Access your personalized learning dashboard</p>
+                    </div>
+
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        </div>
+
+                        <div class="remember-forgot">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember-me" name="remember-me">
+                                <label for="remember-me">Remember me</label>
+                            </div>
+                            <div class="forgot-password">
+                                <a href="forgot-password.html">Forgot password?</a>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="login-btn">Login</button>
+
+                        <div class="divider">or</div>
+
+                        <div class="social-login">
+                            <button type="button" class="social-btn">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                                Continue with Google
+                            </button>
+                            <button type="button" class="social-btn">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+                                Continue with Microsoft
+                            </button>
+                        </div>
+
+                        <div class="signup-link">
+                            Don't have an account? <a href="signup.html">Sign up</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Form Validation
+        const loginForm = document.getElementById('loginForm');
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            
+            // In a real app, you would verify these credentials with your server
+            const storedUser = localStorage.getItem('learnfree-user');
+            
+            if (storedUser) {
+                const user = JSON.parse(storedUser);
+                
+                // Very basic validation - in production, use proper authentication
+                if (user.email === email && user.password === password) {
+                    // Store login state
+                    localStorage.setItem('learnfree-loggedin', 'true');
+                    
+                    // Redirect to homepage or continue to where they wanted to go
+                    const redirectTo = localStorage.getItem('learnfree-redirect') || 'index.html';
+                    window.location.href = redirectTo;
+                    
+                    return;
+                }
+            }
+            
+            // Show error message (in production, be less specific for security)
+            alert('Invalid email or password. Please try again.');
+        });
+
+        // Social Login Buttons (placeholder functionality)
+        document.querySelectorAll('.social-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('In a real app, this would connect to the respective authentication service');
+            });
+        });
+
+        // Check if user is already logged in (basic example)
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('learnfree-loggedin') === 'true') {
+                // User is logged in, redirect to home
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>	
