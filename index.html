@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnFree - Free Education for All</title>
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary-color: #f72585;
+            --secondary-dark: #ef5b5b;
+            --accent-color: #4cc9f0;
+            --dark-color: #212529;
+            --light-color: #f8f9fa;
+            --text-color: #444;
+            --text-light: #777;
+            --border-radius: 8px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+            --link-color: #1a73e8;
+            --focus-outline: 3px solid var(--primary-color);
+            --focus-outline-offset: 2px;
+        }
+
+        /* Base Reset & Accessibility */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+        }
+
+        /* Skip link for keyboard users */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Focus styles for accessibility */
+        a:focus,
+        button:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: var(--focus-outline);
+            outline-offset: var(--focus-outline-offset);
+        }
+
+        /* Layout Utilities */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-color);
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 5px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), #6a5acd);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('hero-pattern.svg') no-repeat center center;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.25rem;
+            color: var(--dark-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title p {
+            font-size: 1.125rem;
+            color: var(--text-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            will-change: transform;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.25rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.375rem;
+            margin-bottom: 0.75rem;
+            color: var(--dark-color);
+        }
+
+        /* Subjects Section */
+        .subjects {
+            padding: 80px 0;
+            background-color: #f0f4ff;
+        }
+
+        .grade-levels {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .grade-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.875rem;
+        }
+
+        .grade-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .grade-btn:hover:not(.active) {
+            border-color: var(--primary-color);
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .subject-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            will-change: transform;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-img {
+            height: 150px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .subject-content {
+            padding: 20px;
+        }
+
+        .subject-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+            font-size: 1.25rem;
+        }
+
+        .subject-content p {
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            display: none;
+        }
+
+        .testimonial.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .testimonial-text {
+            font-size: 1.125rem;
+            font-style: italic;
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--dark-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .testimonial-role {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .slider-dot.active {
+            background: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .slider-dot:hover:not(.active) {
+            background: #ccc;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--secondary-color), #ff8e8e);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .cta p {
+            font-size: 1.125rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .modal-body {
+            margin-bottom: 25px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.125rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            transition: var(--transition);
+            font-size: 0.875rem;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.25rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.875rem;
+            color: #bbb;
+        }
+
+        .footer-bottom a {
+            color: #bbb;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                gap: 15px;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .mobile-menu[aria-expanded="true"] {
+                color: var(--primary-color);
+            }
+            
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.75rem;
+            }
+            
+            .testimonial {
+                padding: 30px 20px;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+            }
+            
+            .modal-footer .btn {
+                width: 100%;
+            }
+        }
+
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to content link for accessibility -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav aria-label="Main navigation">
+                <a href="index.html" class="logo">Learn<span>Free</span></a>
+                <button class="mobile-menu" aria-expanded="false" aria-controls="main-menu">
+                    <span class="sr-only">Menu</span>
+                    ☰
+                </button>
+                <ul class="nav-links" id="main-menu">
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#subjects" class="nav-link">Subjects</a></li>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="login.html" class="nav-link">Login</a></li>
+                    <li><a href="signup.html" class="btn btn-secondary">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-heading">
+            <div class="container">
+                <h1 id="hero-heading">Learn Anything, For Free</h1>
+                <p class="hero-subtitle">Access fun, easy-to-understand lessons and quizzes for all subjects from Grade 1 through University level. Join thousands of learners worldwide!</p>
+                <div class="hero-buttons">
+                    <a href="#subjects" class="btn">Start Learning</a>
+                    <a href="signup.html" class="btn btn-secondary">Sign Up Free</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features" aria-labelledby="features-heading">
+            <div class="container">
+                <div class="section-title">
+                    <h2 id="features-heading">Why Choose LearnFree?</h2>
+                    <p>We make learning accessible, engaging, and effective for everyone, regardless of age or background.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Fun Explanations</h3>
+                        <p>Our lessons use real-world examples, animations, and interactive elements to make complex concepts easy to understand.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Interactive Quizzes</h3>
+                        <p>Test your knowledge with our engaging quizzes that adapt to your learning level and provide instant feedback.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Learn Anywhere</h3>
+                        <p>Access all our resources on any device - computer, tablet, or smartphone. Learn at your own pace, anytime.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎓</div>
+                        <h3>All Education Levels</h3>
+                        <p>From elementary school basics to advanced university topics, we've got comprehensive coverage for all learners.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👨‍🏫</div>
+                        <h3>Expert Educators</h3>
+                        <p>Our content is created by experienced teachers and subject matter experts to ensure quality and accuracy.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>100% Free</h3>
+                        <p>Quality education should be accessible to everyone. We're committed to keeping all our resources completely free.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subjects Section -->
+        <section class="subjects" id="subjects" aria-labelledby="subjects-heading">
+            <div class="container">
+                <div class="section-title">
+                    <h2 id="subjects-heading">Explore Our Subjects</h2>
+                    <p>Browse through our comprehensive collection of subjects for all education levels.</p>
+                </div>
+                
+                <div class="grade-levels" role="tablist" aria-label="Education level filters">
+                    <button class="grade-btn active" data-grade="all" role="tab" aria-selected="true" tabindex="0">All Levels</button>
+                    <button class="grade-btn" data-grade="elementary" role="tab" aria-selected="false" tabindex="-1">Elementary (1-5)</button>
+                    <button class="grade-btn" data-grade="middle" role="tab" aria-selected="false" tabindex="-1">Middle School (6-8)</button>
+                    <button class="grade-btn" data-grade="high" role="tab" aria-selected="false" tabindex="-1">High School (9-12)</button>
+                    <button class="grade-btn" data-grade="university" role="tab" aria-selected="false" tabindex="-1">University</button>
+                </div>
+                
+                <div class="subjects-grid">
+                    <!-- Elementary School Subjects -->
+                    <div class="subject-card" data-grade="elementary">
+                        <div class="subject-img" style="background-color: #ffe0b2;">🔢</div>
+                        <div class="subject-content">
+                            <h3>Elementary Math</h3>
+                            <p>Learn numbers, basic operations, fractions, and more through fun games and stories.</p>
+                            <a href="learn.html#math" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <div class="subject-card" data-grade="elementary">
+                        <div class="subject-img" style="background-color: #ffcdd2;">📖</div>
+                        <div class="subject-content">
+                            <h3>Reading & Writing</h3>
+                            <p>Develop literacy skills with interactive stories, vocabulary builders, and writing exercises.</p>
+                            <a href="learn.html#language" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <div class="subject-card" data-grade="elementary">
+                        <div class="subject-img" style="background-color: #c8e6c9;">🌍</div>
+                        <div class="subject-content">
+                            <h3>Science Basics</h3>
+                            <p>Explore plants, animals, weather, and simple experiments with our fun science lessons.</p>
+                            <a href="learn.html#science" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Middle School Subjects -->
+                    <div class="subject-card" data-grade="middle">
+                        <div class="subject-img" style="background-color: #bbdefb;">🧮</div>
+                        <div class="subject-content">
+                            <h3>Pre-Algebra</h3>
+                            <p>Master the fundamentals of algebra with our step-by-step visual explanations.</p>
+                            <a href="learn.html#math" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <div class="subject-card" data-grade="middle">
+                        <div class="subject-img" style="background-color: #d1c4e9;">🧪</div>
+                        <div class="subject-content">
+                            <h3>Physical Science</h3>
+                            <p>Discover chemistry and physics concepts through interactive simulations and labs.</p>
+                            <a href="learn.html#science" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <div class="subject-card" data-grade="middle">
+                        <div class="subject-img" style="background-color: #f8bbd0;">🌎</div>
+                        <div class="subject-content">
+                            <h3>World History</h3>
+                            <p>Travel through time with animated history lessons and primary source explorations.</p>
+                            <a href="learn.html#history" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <!-- High School Subjects -->
+                    <div class="subject-card" data-grade="high">
+                        <div class="subject-img" style="background-color: #b2ebf2;">📈</div>
+                        <div class="subject-content">
+                            <h3>Algebra & Calculus</h3>
+                            <p>From quadratic equations to derivatives, we make advanced math approachable.</p>
+                            <a href="learn.html#math" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <div class="subject-card" data-grade="high">
+                        <div class="subject-img" style="background-color: #d7ccc8;">🧬</div>
+                        <div class="subject-content">
+                            <h3>Biology</h3>
+                            <p>Explore life sciences with 3D cell models, genetics simulations, and dissection videos.</p>
+                            <a href="learn.html#science" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <div class="subject-card" data-grade="high">
+                        <div class="subject-img" style="background-color: #ffecb3;">⚡</div>
+                        <div class="subject-content">
+                            <h3>Physics</h3>
+                            <p>Understand motion, energy, and forces through interactive problem-solving.</p>
+                            <a href="learn.html#science" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <!-- University Subjects -->
+                    <div class="subject-card" data-grade="university">
+                        <div class="subject-img" style="background-color: #cfd8dc;">💻</div>
+                        <div class="subject-content">
+                            <h3>Computer Science</h3>
+                            <p>Learn programming, algorithms, and data structures with our coding playground.</p>
+                            <a href="learn.html#cs" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <div class="subject-card" data-grade="university">
+                        <div class="subject-img" style="background-color: #c5cae9;">🧠</div>
+                        <div class="subject-content">
+                            <h3>Psychology</h3>
+                            <p>Explore human behavior, cognition, and mental processes with case studies.</p>
+                            <a href="learn.html#psychology" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    
+                    <div class="subject-card" data-grade="university">
+                        <div class="subject-img" style="background-color: #b2dfdb;">💰</div>
+                        <div class="subject-content">
+                            <h3>Economics</h3>
+                            <p>Understand micro and macroeconomics through real-world applications.</p>
+                            <a href="learn.html#economics" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials" id="testimonials" aria-labelledby="testimonials-heading">
+            <div class="container">
+                <div class="section-title">
+                    <h2 id="testimonials-heading">What Our Learners Say</h2>
+                    <p>Hear from students and educators who have transformed their learning with LearnFree.</p>
+                </div>
+                
+                <div class="testimonial-slider">
+                    <div class="testimonial active" role="tabpanel" aria-labelledby="testimonial-1" tabindex="0">
+                        <p class="testimonial-text">"LearnFree made math fun for my 4th grader who was struggling with fractions. The interactive lessons and games helped her understand concepts that seemed impossible before."</p>
+                        <div class="testimonial-author">Sarah Johnson</div>
+                        <div class="testimonial-role">Parent</div>
+                    </div>
+                    
+                    <div class="testimonial" role="tabpanel" aria-labelledby="testimonial-2" tabindex="-1">
+                        <p class="testimonial-text">"As a high school student preparing for college, the advanced math and science courses on LearnFree gave me the extra practice I needed to ace my AP exams."</p>
+                        <div class="testimonial-author">Michael Chen</div>
+                        <div class="testimonial-role">High School Senior</div>
+                    </div>
+                    
+                    <div class="testimonial" role="tabpanel" aria-labelledby="testimonial-3" tabindex="-1">
+                        <p class="testimonial-text">"I use LearnFree in my classroom to supplement lessons. The quality of content is exceptional, and my students love the interactive quizzes and videos."</p>
+                        <div class="testimonial-author">David Rodriguez</div>
+                        <div class="testimonial-role">Middle School Teacher</div>
+                    </div>
+                    
+                    <div class="slider-controls">
+                        <button class="slider-dot active" data-slide="0" aria-label="Show testimonial 1" aria-current="true"></button>
+                        <button class="slider-dot" data-slide="1" aria-label="Show testimonial 2" aria-current="false"></button>
+                        <button class="slider-dot" data-slide="2" aria-label="Show testimonial 3" aria-current="false"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta" aria-labelledby="cta-heading">
+            <div class="container">
+                <h2 id="cta-heading">Ready to Start Learning?</h2>
+                <p>Join thousands of learners worldwide who are mastering new subjects every day with our free platform.</p>
+                <a href="signup.html" class="btn">Sign Up Free</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>LearnFree</h3>
+                    <p>Making quality education accessible to everyone, everywhere. Free forever.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Instagram">📸</a>
+                        <a href="#" aria-label="YouTube">🎬</a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Subjects</h3>
+                    <ul class="footer-links">
+                        <li><a href="learn.html#math">Math</a></li>
+                        <li><a href="learn.html#science">Science</a></li>
+                        <li><a href="learn.html#language">Language Arts</a></li>
+                        <li><a href="learn.html#history">Social Studies</a></li>
+                        <li><a href="learn.html#cs">Computer Science</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Grade Levels</h3>
+                    <ul class="footer-links">
+                        <li><a href="#subjects">Elementary School</a></li>
+                        <li><a href="#subjects">Middle School</a></li>
+                        <li><a href="#subjects">High School</a></li>
+                        <li><a href="#subjects">College/University</a></li>
+                        <li><a href="#subjects">Adult Learning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 LearnFree. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isExpanded);
+                navLinks.classList.toggle('active');
+                document.body.style.overflow = isExpanded ? 'auto' : 'hidden';
+            });
+
+            // Grade Filtering
+            const gradeButtons = document.querySelectorAll('.grade-btn');
+            const subjectCards = document.querySelectorAll('.subject-card');
+            
+            gradeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    gradeButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-selected', 'false');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+                    
+                    // Get the grade level to filter by
+                    const gradeLevel = this.dataset.grade;
+                    
+                    // Filter the subject cards
+                    subjectCards.forEach(card => {
+                        if (gradeLevel === 'all' || card.dataset.grade === gradeLevel) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Testimonial Slider
+            const testimonials = document.querySelectorAll('.testimonial');
+            const dots = document.querySelectorAll('.slider-dot');
+            let currentIndex = 0;
+            
+            function showTestimonial(index) {
+                testimonials.forEach(testimonial => {
+                    testimonial.classList.remove('active');
+                    testimonial.setAttribute('tabindex', '-1');
+                });
+                
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                    dot.setAttribute('aria-current', 'false');
+                });
+                
+                testimon
